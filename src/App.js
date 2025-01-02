@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { lightTheme, darkTheme } from './theme';
 import ThemeToggle from './components/ThemeToggle';
 import Home from './pages/Home';
-import TutorialPage from './pages/TutorialPage';
+import TutorialPage from './pages/PageHandler';
 
 function App() {
   const [theme, setTheme] = useState('light');
