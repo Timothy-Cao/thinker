@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { Button } from '@mui/material';
+import { Typography, Button, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
@@ -11,13 +10,17 @@ const Home = () => {
   };
 
   return (
-    <div>
-      <h1>Hello, Thinker!</h1>
-      <p>Investigate and visualize how people think in the face of cognitive biases and information sources.</p>
-      <Button variant="contained" onClick={startTutorial}>
-        Start Tutorial
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '80vh' }}>
+      <Typography variant="h4" gutterBottom>
+        Hello, fellow thinker!
+      </Typography>
+      <Typography variant="body1" paragraph>
+        Simulate the act of thinking in the face of cognitive biases.
+      </Typography>
+      <Button variant="contained" color="primary" onClick={startTutorial}>
+        Start simulation
       </Button>
-    </div>
+    </Box>
   );
 };
 

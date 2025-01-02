@@ -15,7 +15,7 @@ function App() {
   };
 
   return (
-    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+    <ThemeProvider theme={theme === 'dark' ? lightTheme : darkTheme}>
       <CssBaseline />
       <Router>
         <div style={{ padding: '20px' }}>
