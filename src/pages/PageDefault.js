@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Typography, Button } from '@mui/material';
 
-const Page2 = () => {
+const PageDefault = ({pageNum}) => {
   return (
     <Box
       sx={{
@@ -14,16 +14,16 @@ const Page2 = () => {
       }}
     >
       <Typography variant="h4" gutterBottom>
-        Title 2
+        Title {pageNum}
       </Typography>
       <Typography variant="body1" paragraph>
-        Description 2
+        Description {pageNum}
       </Typography>
       <Button variant="contained" color="primary">
-        Button 2
+        Button {pageNum}
       </Button>
     </Box>
   );
 };
 
-export default Page2;
+export default PageDefault;

@@ -1,25 +1,14 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Button } from '@mui/material';
+import { Box, Button, Tooltip } from '@mui/material';
 
-const Page1 = React.lazy(() => import('./Page1')); 
-const Page2 = React.lazy(() => import('./Page2'));  
+const Page1 = React.lazy(() => import('./Page1'));
+const Page2 = React.lazy(() => import('./Page2'));
+const PageDefault = React.lazy(() => import('./PageDefault'));
 
 const PageHandler = () => {
   const { pageNum } = useParams();
   const navigate = useNavigate();
-
-  const goToNextPage = () => {
-    const nextPage = parseInt(pageNum) + 1;
-    navigate(`/page/${nextPage}`);
-  };
-
-  const goToPreviousPage = () => {
-    const prevPage = parseInt(pageNum) - 1;
-    if (prevPage >= 1) {
-      navigate(`/page/${prevPage}`);
-    }
-  };
 
   let PageComponent;
   switch (pageNum) {
@@ -30,23 +19,50 @@ const PageHandler = () => {
       PageComponent = Page2;
       break;
     default:
-      PageComponent = () => <p>Page not found.</p>;
+      PageComponent = () => <PageDefault pageNum={pageNum}/>;
   }
 
+  const handlePageClick = (page) => {
+    navigate(`/page/${page}`);
+  };
+
   return (
-    <div>
-      <h2>Page {pageNum}</h2>
+    <div style={{ position: 'relative', height: '100vh', overflow: 'hidden' }}>
       <React.Suspense fallback={<div>Loading...</div>}>
         <PageComponent />
       </React.Suspense>
-      <div>
-        <Button onClick={goToPreviousPage} disabled={pageNum === '1'}>
-          Previous
-        </Button>
-        <Button onClick={goToNextPage}>
-          Next
-        </Button>
-      </div>
+
+      <Box
+        sx={{
+          position: 'fixed',
+          bottom: 20, 
+          left: '50%',
+          transform: 'translateX(-50%)',
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
+        {[...Array(10)].map((_, index) => {
+          const page = index + 1;
+          return (
+            <Tooltip key={page} title={`Page ${page}`} placement="top">
+              <Button
+                onClick={() => handlePageClick(page)}
+                sx={{
+                    borderRadius: '8px', 
+                    width: 40,
+                    height: 40,
+                    margin: '0 4px',
+                    backgroundColor: pageNum === String(page) ? 'primary.main' : 'grey.400',
+                    '&:hover': {
+                    backgroundColor: pageNum === String(page) ? 'primary.dark' : 'grey.500',
+                  },
+                }}
+              />
+            </Tooltip>
+          );
+        })}
+      </Box>
     </div>
   );
 };
