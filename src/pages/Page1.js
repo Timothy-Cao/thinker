@@ -1,9 +1,9 @@
 import React from 'react';
-import SkeletonVisualization from './SkeletonVisualization'
+import Simulation from './Simulation'
 
 const Page1 = () => {
   return (
-    <SkeletonVisualization/>
+    <Simulation/>
   );
 };
 

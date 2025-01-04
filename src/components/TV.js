@@ -21,9 +21,13 @@ const TV = ({ color, validity, popularity, aggression, isSelected }) => {
 
   useEffect(() => {
     if (isSelected) {
-      setIsAnimating(true);
-      const timer = setTimeout(() => setIsAnimating(false), 500); // Animation duration
-      return () => clearTimeout(timer); // Cleanup on unmount
+      // Reset animation state to ensure it re-triggers
+      setIsAnimating(false);
+      const animationResetTimer = setTimeout(() => {
+        setIsAnimating(true);
+      }, 0); // Delay slightly to allow state reset
+
+      return () => clearTimeout(animationResetTimer); // Cleanup timer on unmount
     }
   }, [isSelected]);
 
@@ -38,6 +42,10 @@ const TV = ({ color, validity, popularity, aggression, isSelected }) => {
             height: '20px',
             borderRadius: '5px',
             width: '100%',
+            backgroundColor: '#f0f0f0',
+            '& .MuiLinearProgress-bar': {
+              backgroundColor: '#76c7c0',
+            },
           }}
         />
         <Typography
@@ -63,6 +71,10 @@ const TV = ({ color, validity, popularity, aggression, isSelected }) => {
             height: '20px',
             borderRadius: '5px',
             width: '100%',
+            backgroundColor: '#f0f0f0',
+            '& .MuiLinearProgress-bar': {
+              backgroundColor: '#ffcc00',
+            },
           }}
         />
         <Typography
@@ -88,6 +100,10 @@ const TV = ({ color, validity, popularity, aggression, isSelected }) => {
             height: '20px',
             borderRadius: '5px',
             width: '100%',
+            backgroundColor: '#f0f0f0',
+            '& .MuiLinearProgress-bar': {
+              backgroundColor: '#ff5733',
+            },
           }}
         />
         <Typography
@@ -114,7 +130,7 @@ const TV = ({ color, validity, popularity, aggression, isSelected }) => {
           justifyContent: 'center',
           alignItems: 'center',
           position: 'relative',
-          animation: isAnimating ? 'growShrink 0.5s ease-in-out' : 'none', // Apply the animation if selected
+          animation: isAnimating ? 'growShrink 0.2s ease-in-out' : 'none', // Apply the animation if animating
         }}
       >
         <Box
