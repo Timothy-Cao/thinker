@@ -1,17 +1,36 @@
 import React, { useEffect, useRef } from 'react';
 import { Box, Typography, Paper } from '@mui/material';
 
+const styleLogBubble = (log) => {
+  if (log.includes('ACCEPTED')) {
+    return { backgroundColor: 'rgba(0, 128, 0, 0.2)', content: log.replace('ACCEPTED', '') };
+  }
+  if (log.includes('REJECTED')) {
+    return { backgroundColor: 'rgba(255, 0, 0, 0.2)', content: log.replace('REJECTED', '') };
+  }
+  return { backgroundColor: 'transparent', content: log };
+};
+
+const colorizeLog = (log) => {
+  let coloredLog = log;
+
+  coloredLog = coloredLog.replace(/\bRed\b/g, '<span style="color: red;">Red</span>');
+  coloredLog = coloredLog.replace(/\bBlue\b/g, '<span style="color: blue;">Blue</span>');
+  coloredLog = coloredLog.replace(/\bGreen\b/g, '<span style="color: green;">Green</span>');
+
+  return coloredLog;
+};
+
 const Console = ({ logs }) => {
-  // Create a reference to the container holding the logs
   const consoleRef = useRef();
 
-  // Use effect to scroll to the bottom when logs change
+  const trimmedLogs = logs.slice(-20);
+
   useEffect(() => {
     if (consoleRef.current) {
-      // Scroll to the bottom of the console
       consoleRef.current.scrollTop = consoleRef.current.scrollHeight;
     }
-  }, [logs]); // Only run when logs change
+  }, [logs]); 
 
   return (
     <Box
@@ -22,17 +41,33 @@ const Console = ({ logs }) => {
         right: -800,
         width: 400,
         height: 300,
-        overflowY: 'auto', // Vertical scrolling
+        overflowY: 'auto', 
         color: 'white',
         padding: 2,
         borderRadius: 2,
       }}
     >
-      {logs.map((log, index) => (
-        <Paper key={index} sx={{ padding: 1, marginBottom: 1 }}>
-          <Typography variant="body2">{log}</Typography>
-        </Paper>
-      ))}
+      {trimmedLogs.map((log, index) => {
+        const { backgroundColor, content } = styleLogBubble(log);
+        const coloredContent = colorizeLog(content); 
+        return (
+          <Paper
+            key={index}
+            sx={{
+              padding: 1,
+              marginBottom: 1,
+              backgroundColor: backgroundColor, 
+              borderRadius: 1,
+            }}
+          >
+            <Typography
+              variant="body2"
+              component="div" 
+              dangerouslySetInnerHTML={{ __html: coloredContent }} // Render HTML
+            />
+          </Paper>
+        );
+      })}
     </Box>
   );
 };

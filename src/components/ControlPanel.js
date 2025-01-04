@@ -21,7 +21,7 @@ const ControlPanel = ({ onValuesChange }) => {
   const sliders = [
     { label: "Open-mindedness", key: "openMindedness", tooltip: "How often one allows content to be considered for digestion when it doesn't match their alignment." },
     { label: "Criticality", key: "criticality", tooltip: "How high is the bar for content digestion. This value is the required score for new content to take effect." },
-    { label: "Confirmation Bias", key: "confirmationBias", tooltip: "How much one special preference is given. This value is added to the content's score if it matches the top alignment." },
+    { label: "Confirmation Bias", key: "confirmationBias", tooltip: "How much one special preference is given. This value is added to the content's score if it matches the top alignment, and removed from other scores." },
     { label: "Swayability", key: "swayability", tooltip: "How much one's opinion is swayed when new content is digested." },
   ];
 

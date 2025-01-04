@@ -84,7 +84,7 @@ const TV = ({ color, validity, popularity, aggression, isSelected }) => {
             color: '#000',
           }}
         >
-          Popularity
+          Frequency
         </Typography>
       </Box>
 

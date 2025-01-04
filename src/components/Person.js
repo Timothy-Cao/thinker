@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Box } from '@mui/material';
-import Console from './Console'; // Import the Console component
+import Console from './Console'; 
 
 const Person = ({ onAlignmentChange, content, openMindedness, criticality, confirmationBias, swayability }) => {
-  // Initial alignment values for red, blue, and green
   const [alignment, setAlignment] = useState({
     red: 33.3,
     blue: 33.3,
@@ -42,13 +41,13 @@ const roundToOneDecimal = (value) => {
       ? '#0000FF'
       : '#008000';
 
-    let statusMessage = `Incoming Content: ${getColorName(content.color)} - Validity: ${roundToOneDecimal(content.validity)}`;
+    let statusMessage = `${getColorName(content.color)} - Persuasiveness: ${roundToOneDecimal(content.validity)}`;
 
     if (content.color !== preferentialAlignment) {
       const chance = Math.random() * 100;
       if (chance > openMindedness) {
-        statusMessage += ` | REJECTED (Open-mindedness: ${roundToOneDecimal(chance)} < ${roundToOneDecimal(openMindedness)})`;
-        logEntries.push(statusMessage); // Log rejection reason
+        statusMessage += ` <br /> REJECTED Closed minded`;
+        logEntries.push(statusMessage); 
         setLogs(logEntries);
         return;
       }
@@ -67,24 +66,24 @@ const roundToOneDecimal = (value) => {
 
     // Step 3: Check if adjusted validity passes criticality threshold
     if (adjustedValidity < criticality) {
-      statusMessage += ` | REJECTED (Validity): ${roundToOneDecimal(adjustedValidity)} < Criticality: ${roundToOneDecimal(criticality)})`;
-      logEntries.push(statusMessage); // Log rejection reason
+        statusMessage += ` <br /> REJECTED Not convincing enough`;
+      logEntries.push(statusMessage); 
       setLogs(logEntries);
       return;
     }
 
     // Step 4: Calculate alignment change based on content color and swayability
-    const swayFactor = swayability / 100;
+    const swayFactor = (swayability + content.aggression) / 200;
     let newAlignment = { ...alignment }; 
-    if (content.color === '#FF0000') { // Red content
+    if (content.color === '#FF0000') { 
       newAlignment.red = roundToOneDecimal(swayFactor * 100 + (1 - swayFactor) * alignment.red);
       newAlignment.blue = roundToOneDecimal(swayFactor * 0 + (1 - swayFactor) * alignment.blue);
       newAlignment.green = roundToOneDecimal(swayFactor * 0 + (1 - swayFactor) * alignment.green);
-    } else if (content.color === '#0000FF') { // Blue content
+    } else if (content.color === '#0000FF') { 
       newAlignment.red = roundToOneDecimal(swayFactor * 0 + (1 - swayFactor) * alignment.red);
       newAlignment.blue = roundToOneDecimal(swayFactor * 100 + (1 - swayFactor) * alignment.blue);
       newAlignment.green = roundToOneDecimal(swayFactor * 0 + (1 - swayFactor) * alignment.green);
-    } else if (content.color === '#008000') { // Green content
+    } else if (content.color === '#008000') { 
       newAlignment.red = roundToOneDecimal(swayFactor * 0 + (1 - swayFactor) * alignment.red);
       newAlignment.blue = roundToOneDecimal(swayFactor * 0 + (1 - swayFactor) * alignment.blue);
       newAlignment.green = roundToOneDecimal(swayFactor * 100 + (1 - swayFactor) * alignment.green);
@@ -93,7 +92,7 @@ const roundToOneDecimal = (value) => {
     setAlignment(newAlignment);
     onAlignmentChange(newAlignment);
 
-    statusMessage += ` | ACCEPTED`;
+    statusMessage += ` ACCEPTED`;
     logEntries.push(statusMessage); 
     setLogs(logEntries);
   };
