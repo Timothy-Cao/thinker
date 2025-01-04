@@ -143,17 +143,16 @@ const Simulation = () => {
         </Button>
       </Box>
 
-      {/* Render all newspapers */}
       {newspapers.map((newspaper) => (
         <Newspaper
-          key={newspaper.id} // Use unique key instead of index
+          key={newspaper.id} 
           startX={newspaper.startX}
           startY={newspaper.startY}
           endX={newspaper.endX}
           endY={newspaper.endY}
           onEnd={() => {
             setNewspapers((prevNewspapers) =>
-              prevNewspapers.filter((n) => n.id !== newspaper.id) // Use id to filter out the correct newspaper
+              prevNewspapers.filter((n) => n.id !== newspaper.id) 
             );
           }}
         />
