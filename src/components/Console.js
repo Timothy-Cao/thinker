@@ -63,7 +63,7 @@ const Console = ({ logs }) => {
             <Typography
               variant="body2"
               component="div" 
-              dangerouslySetInnerHTML={{ __html: coloredContent }} // Render HTML
+              dangerouslySetInnerHTML={{ __html: coloredContent }} 
             />
           </Paper>
         );

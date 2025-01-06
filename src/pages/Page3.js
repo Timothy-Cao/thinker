@@ -6,7 +6,7 @@ const Page2 = () => {
   const navigate = useNavigate(); 
 
   const handleNextStep = () => {
-    navigate(`/page/3`); 
+    navigate(`/page/4`); 
   };
 
   return (
@@ -24,7 +24,7 @@ const Page2 = () => {
       }}
     >
       <Typography variant="h4" gutterBottom>
-        Exploring Perceptions of Information
+        Defining terms
       </Typography>
       <br />
       <Typography variant="body1" paragraph>
