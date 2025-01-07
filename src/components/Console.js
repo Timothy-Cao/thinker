@@ -3,7 +3,7 @@ import { Box, Typography, Paper } from '@mui/material';
 
 const styleLogBubble = (log) => {
   if (log.includes('ACCEPTED')) {
-    return { backgroundColor: 'rgba(0, 128, 0, 0.2)', content: log.replace('ACCEPTED', '') };
+    return { backgroundColor: 'rgba(0, 255, 0, 0.2)', content: log.replace('ACCEPTED', '') };
   }
   if (log.includes('REJECTED')) {
     return { backgroundColor: 'rgba(255, 0, 0, 0.2)', content: log.replace('REJECTED', '') };
