@@ -27,14 +27,8 @@ const Simulation = () => {
     openMindedness: 80,
     criticality: 70,
     confirmationBias: 15,
-    swayability: 20,
+    swayability: 50,
   });
-
-  const [animatedTVIndex, setAnimatedTVIndex] = useState(null);
-  const [newspapers, setNewspapers] = useState([]); // Use an array to store multiple newspapers
-
-  const personRef = useRef(null);
-  const tvRefs = useRef([]);
 
   const normalRandom = (mean, stdDev) => {
     let u1 = Math.random();
@@ -42,6 +36,14 @@ const Simulation = () => {
     let z0 = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
     return mean + z0 * stdDev;
   };
+
+  const [animatedTVIndex, setAnimatedTVIndex] = useState(null);
+  const [newspapers, setNewspapers] = useState([]);
+
+  const personRef = useRef(null);
+  const tvRefs = useRef([]);
+  const holdTimeoutRef = useRef(null);
+  const autoClickIntervalRef = useRef(null);
 
   const pickTV = () => {
     const totalPopularity = tvAttributes.reduce((acc, tv) => acc + tv.popularity, 0);
@@ -63,37 +65,50 @@ const Simulation = () => {
 
       if (selectedTV && personElement) {
         const tvRect = selectedTV.getBoundingClientRect();
-        const personCenterX = window.innerWidth / 2; // Horizontal center of the viewport
-        const personCenterY = window.innerHeight - window.innerHeight * 0.2 - 75; // Bottom 20% and half the person's height (75px)
+        const personCenterX = window.innerWidth / 2;
+        const personCenterY = window.innerHeight - window.innerHeight * 0.2 - 75;
 
-        // Add new newspaper to the list of newspapers with unique id
         setNewspapers((prevNewspapers) => [
           ...prevNewspapers,
           {
-            id: Date.now(), // Use a unique ID based on current timestamp or some other unique value
-            startX: tvRect.left + tvRect.width / 2 - 25, // Center the newspaper on the TV
-            startY: tvRect.top + tvRect.height / 2 - 25, // Center the newspaper on the TV
-            endX: personCenterX - 25, // Center the newspaper on the person
-            endY: personCenterY - 25, // Center the newspaper on the person
+            id: Date.now(),
+            startX: tvRect.left + tvRect.width / 2 - 25,
+            startY: tvRect.top + tvRect.height / 2 - 25,
+            endX: personCenterX - 25,
+            endY: personCenterY - 25,
           },
         ]);
 
-        // Trigger content processing after animation starts
         setTimeout(() => {
           const selectedContent = {
             color: tvAttributes[selectedIndex].color,
-            validity: normalRandom(tvAttributes[selectedIndex].validity, 35), // Generate validity
+            validity: normalRandom(tvAttributes[selectedIndex].validity, 35),
             aggression: tvAttributes[selectedIndex].aggression,
           };
 
-          setContent(selectedContent); // Trigger content processing in Person
+          setContent(selectedContent);
           setAnimatedTVIndex(selectedIndex);
 
           setTimeout(() => setAnimatedTVIndex(null), 300);
-        }, 50); // Small delay to ensure the animation starts first
+        }, 50);
       }
     }
   };
+
+  const handleMouseDown = () => {
+    holdTimeoutRef.current = setTimeout(() => {
+      autoClickIntervalRef.current = setInterval(() => {
+        pickTV();
+      }, 50); //speed of watching
+    }, 0); 
+  };
+
+  const handleMouseUp = () => {
+    clearTimeout(holdTimeoutRef.current);
+    clearInterval(autoClickIntervalRef.current);
+  };
+
+  const handleMouseLeave = handleMouseUp;
 
   return (
     <Box
@@ -122,13 +137,16 @@ const Simulation = () => {
       </Grid>
       <div ref={personRef}>
         <Person
-          content={content}
-          onAlignmentChange={setAlignment}
-          openMindedness={controlValues.openMindedness}
-          swayability={controlValues.swayability}
-          confirmationBias={controlValues.confirmationBias}
-          criticality={controlValues.criticality}
-        />
+        content={content}
+        onAlignmentChange={setAlignment}
+        onSwayabilityChange={(newSwayability) =>
+          setControlValues((prev) => ({ ...prev, swayability: newSwayability }))
+        }
+        openMindedness={controlValues.openMindedness}
+        swayability={controlValues.swayability}
+        confirmationBias={controlValues.confirmationBias}
+        criticality={controlValues.criticality}
+      />
       </div>
       <Box
         sx={{
@@ -138,28 +156,37 @@ const Simulation = () => {
           transform: 'translateX(-50%)',
         }}
       >
-        <Button variant="contained" color="primary" onClick={pickTV}>
-          Watch TV
+        <Button
+          variant="contained"
+          color="primary"
+          onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseLeave}
+        >
+          Hold to Watch TV
         </Button>
       </Box>
 
       {newspapers.map((newspaper) => (
         <Newspaper
-          key={newspaper.id} 
+          key={newspaper.id}
           startX={newspaper.startX}
           startY={newspaper.startY}
           endX={newspaper.endX}
           endY={newspaper.endY}
           onEnd={() => {
             setNewspapers((prevNewspapers) =>
-              prevNewspapers.filter((n) => n.id !== newspaper.id) 
+              prevNewspapers.filter((n) => n.id !== newspaper.id)
             );
           }}
         />
       ))}
 
       <BarGraph alignment={alignment} />
-      <ControlPanel onValuesChange={setControlValues} />
+      <ControlPanel
+      values={controlValues}
+      onValuesChange={setControlValues}
+/>
     </Box>
   );
 };

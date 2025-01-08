@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Box } from '@mui/material';
 import Console from './Console'; 
 
-const Person = ({ onAlignmentChange, content, openMindedness, criticality, confirmationBias, swayability }) => {
+const Person = ({ onAlignmentChange, content, openMindedness, criticality, confirmationBias, swayability, onSwayabilityChange }) => {
   const [alignment, setAlignment] = useState({
     red: 33.3,
     blue: 33.3,
@@ -72,23 +72,29 @@ const roundToOneDecimal = (value) => {
       return;
     }
 
-    // Step 4: Calculate alignment change based on content color and swayability
-    const swayFactor = (swayability + content.aggression) / 200;
-    let newAlignment = { ...alignment }; 
-    if (content.color === '#FF0000') { 
-      newAlignment.red = roundToOneDecimal(swayFactor * 100 + (1 - swayFactor) * alignment.red);
-      newAlignment.blue = roundToOneDecimal(swayFactor * 0 + (1 - swayFactor) * alignment.blue);
-      newAlignment.green = roundToOneDecimal(swayFactor * 0 + (1 - swayFactor) * alignment.green);
-    } else if (content.color === '#0000FF') { 
-      newAlignment.red = roundToOneDecimal(swayFactor * 0 + (1 - swayFactor) * alignment.red);
-      newAlignment.blue = roundToOneDecimal(swayFactor * 100 + (1 - swayFactor) * alignment.blue);
-      newAlignment.green = roundToOneDecimal(swayFactor * 0 + (1 - swayFactor) * alignment.green);
-    } else if (content.color === '#008000') { 
-      newAlignment.red = roundToOneDecimal(swayFactor * 0 + (1 - swayFactor) * alignment.red);
-      newAlignment.blue = roundToOneDecimal(swayFactor * 0 + (1 - swayFactor) * alignment.blue);
-      newAlignment.green = roundToOneDecimal(swayFactor * 100 + (1 - swayFactor) * alignment.green);
-    }
+  // Step 4: Calculate alignment change based on content color and swayability
+  const swayFactor = swayability / 100;
+  const aggressionInfluence = content.aggression / 100; 
+  const totalInfluence = swayFactor * aggressionInfluence;
 
+  let newAlignment = { ...alignment }; 
+  if (content.color === '#FF0000') { 
+    newAlignment.red = roundToOneDecimal(totalInfluence * 100 + (1 - totalInfluence) * alignment.red);
+    newAlignment.blue = roundToOneDecimal(totalInfluence * 0 + (1 - totalInfluence) * alignment.blue);
+    newAlignment.green = roundToOneDecimal(totalInfluence * 0 + (1 - totalInfluence) * alignment.green);
+  } else if (content.color === '#0000FF') { 
+    newAlignment.red = roundToOneDecimal(totalInfluence * 0 + (1 - totalInfluence) * alignment.red);
+    newAlignment.blue = roundToOneDecimal(totalInfluence * 100 + (1 - totalInfluence) * alignment.blue);
+    newAlignment.green = roundToOneDecimal(totalInfluence * 0 + (1 - totalInfluence) * alignment.green);
+  } else if (content.color === '#008000') { 
+    newAlignment.red = roundToOneDecimal(totalInfluence * 0 + (1 - totalInfluence) * alignment.red);
+    newAlignment.blue = roundToOneDecimal(totalInfluence * 0 + (1 - totalInfluence) * alignment.blue);
+    newAlignment.green = roundToOneDecimal(totalInfluence * 100 + (1 - totalInfluence) * alignment.green);
+  }
+
+  // Decaying swayability due to lost of plastic thinking
+    const updatedSwayability = Math.max(swayability - 1, 0);
+    onSwayabilityChange(updatedSwayability);
     setAlignment(newAlignment);
     onAlignmentChange(newAlignment);
 
@@ -96,7 +102,6 @@ const roundToOneDecimal = (value) => {
     logEntries.push(statusMessage); 
     setLogs(logEntries);
   };
-  // Call processContent whenever content is updated
   useEffect(() => {
     processContent(content);
   }, [content]);
