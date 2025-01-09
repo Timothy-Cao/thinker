@@ -30,6 +30,21 @@ const Simulation = () => {
     swayability: 50,
   });
 
+  const resetLogsRef = useRef(null); // Ref to store the reset function
+  const handleReset = () => {
+    setAlignment({ red: 33.3, blue: 33.3, green: 33.3 });
+    setControlValues({
+      openMindedness: 70,
+      criticality: 50,
+      confirmationBias: 15,
+      swayability: 60,
+    });
+    
+    if (resetLogsRef.current) {
+      resetLogsRef.current(); // Call the reset function
+    }
+  };
+
   const normalRandom = (mean, stdDev) => {
     let u1 = Math.random();
     let u2 = Math.random();
@@ -99,7 +114,7 @@ const Simulation = () => {
     holdTimeoutRef.current = setTimeout(() => {
       autoClickIntervalRef.current = setInterval(() => {
         pickTV();
-      }, 50); //speed of watching
+      }, 100); //speed of watching
     }, 0); 
   };
 
@@ -146,6 +161,7 @@ const Simulation = () => {
         swayability={controlValues.swayability}
         confirmationBias={controlValues.confirmationBias}
         criticality={controlValues.criticality}
+        onResetLogs={(resetLogs) => (resetLogsRef.current = resetLogs)}
       />
       </div>
       <Box
@@ -183,6 +199,11 @@ const Simulation = () => {
       ))}
 
       <BarGraph alignment={alignment} />
+      <Box sx={{ textAlign: 'center', marginTop: 2 }}>
+        <Button variant="contained" color="primary" onClick={handleReset}>
+          Reset
+        </Button>
+      </Box>
       <ControlPanel
       values={controlValues}
       onValuesChange={setControlValues}

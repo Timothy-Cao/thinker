@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Box } from '@mui/material';
 import Console from './Console'; 
 
-const Person = ({ onAlignmentChange, content, openMindedness, criticality, confirmationBias, swayability, onSwayabilityChange }) => {
+const Person = ({ onAlignmentChange, content, openMindedness, criticality, confirmationBias, swayability, onSwayabilityChange, onResetLogs, }) => {
   const [alignment, setAlignment] = useState({
     red: 33.3,
     blue: 33.3,
@@ -16,6 +16,16 @@ const roundToOneDecimal = (value) => {
     return parseFloat(clampedValue.toFixed(1)); 
   };
   
+  const resetLogs = () => {
+    setLogs([]); 
+  };
+
+  useEffect(() => {
+    if (onResetLogs) {
+      onResetLogs(resetLogs); 
+    }
+  }, [onResetLogs]);
+
   const getColorName = (hex) => {
     switch (hex) {
       case '#FF0000':
