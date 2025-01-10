@@ -15,7 +15,6 @@ const growShrinkAnimation = `
   }
 `;
 
-// Reusable ProgressBar Component
 const ProgressBar = ({ label, value, barColor }) => (
   <Box sx={{ position: 'relative', width: '120px', marginBottom: 1 }}>
     <LinearProgress
@@ -49,7 +48,7 @@ const ProgressBar = ({ label, value, barColor }) => (
 const TV = ({ color, validity, popularity, aggression, isSelected }) => {
   const [animationKey, setAnimationKey] = useState(0);
 
-  // Re-trigger animation key when isSelected changes
+  // trigger animation key upon isSelected changes
   useEffect(() => {
     if (isSelected) {
       setAnimationKey((prevKey) => prevKey + 1);
@@ -58,14 +57,12 @@ const TV = ({ color, validity, popularity, aggression, isSelected }) => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      {/* Progress Bars */}
       <ProgressBar label="Validity" value={validity} barColor="#76c7c0" />
       <ProgressBar label="Frequency" value={popularity} barColor="#ffcc00" />
       <ProgressBar label="Aggression" value={aggression} barColor="#ff5733" />
 
-      {/* Animated TV Box */}
       <Box
-        key={animationKey} // React re-renders the animation when key changes
+        key={animationKey}
         sx={{
           width: 120,
           height: 120,
