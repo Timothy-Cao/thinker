@@ -28,8 +28,7 @@ const Page2 = () => {
       </Typography>
       <br />
       <Typography variant="body1" paragraph>
-        The goal of this simulation is to explore how factors like open-mindedness, criticality, confirmation bias, and swayability 
-        influence the way we process and digest information.
+        Validity
       </Typography>
       <Typography variant="body1" paragraph>
         We will also investigate how the validity, frequency, and aggressiveness of information sources affect people's perceptions 

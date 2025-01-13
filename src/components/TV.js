@@ -57,7 +57,7 @@ const TV = ({ color, validity, popularity, Polarization, isSelected }) => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <ProgressBar label="Validity" value={validity} barColor="#999999" />
+      <ProgressBar label="Validity" value={validity} barColor="#44AA44" />
       <ProgressBar label="Frequency" value={popularity} barColor="#999999" />
       <ProgressBar label="Polarization" value={Polarization} barColor="#999999" />
 
