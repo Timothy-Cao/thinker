@@ -12,13 +12,13 @@ const styleLogBubble = (log) => {
 };
 
 const colorizeLog = (log) => {
-  let coloredLog = log;
+  let colocyanLog = log;
+  colocyanLog = colocyanLog.replace(/\bcyan\b/g, '<span style="color: cyan; display: inline-block; width: 50px;">■ _ _</span>');
+  colocyanLog = colocyanLog.replace(/\bmagenta\b/g, '<span style="color: magenta; display: inline-block; width: 50px;">_ ■ _</span>');
+  colocyanLog = colocyanLog.replace(/\byellow\b/g, '<span style="color: yellow; display: inline-block; width: 50px;">_ _ ■</span>');
+  
 
-  coloredLog = coloredLog.replace(/\bRed\b/g, '<span style="color: red;">Red</span>');
-  coloredLog = coloredLog.replace(/\bBlue\b/g, '<span style="color: blue;">Blue</span>');
-  coloredLog = coloredLog.replace(/\bGreen\b/g, '<span style="color: green;">Green</span>');
-
-  return coloredLog;
+  return colocyanLog;
 };
 
 const Console = ({ logs }) => {
@@ -49,7 +49,7 @@ const Console = ({ logs }) => {
     >
       {trimmedLogs.map((log, index) => {
         const { backgroundColor, content } = styleLogBubble(log);
-        const coloredContent = colorizeLog(content); 
+        const colocyanContent = colorizeLog(content); 
         return (
           <Paper
             key={index}
@@ -63,7 +63,7 @@ const Console = ({ logs }) => {
             <Typography
               variant="body2"
               component="div" 
-              dangerouslySetInnerHTML={{ __html: coloredContent }} 
+              dangerouslySetInnerHTML={{ __html: colocyanContent }} 
             />
           </Paper>
         );

@@ -45,7 +45,7 @@ const ProgressBar = ({ label, value, barColor }) => (
   </Box>
 );
 
-const TV = ({ color, validity, popularity, aggression, isSelected }) => {
+const TV = ({ color, validity, popularity, Polarization, isSelected }) => {
   const [animationKey, setAnimationKey] = useState(0);
 
   // trigger animation key upon isSelected changes
@@ -57,9 +57,9 @@ const TV = ({ color, validity, popularity, aggression, isSelected }) => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <ProgressBar label="Validity" value={validity} barColor="#76c7c0" />
-      <ProgressBar label="Frequency" value={popularity} barColor="#ffcc00" />
-      <ProgressBar label="Aggression" value={aggression} barColor="#ff5733" />
+      <ProgressBar label="Validity" value={validity} barColor="#999999" />
+      <ProgressBar label="Frequency" value={popularity} barColor="#999999" />
+      <ProgressBar label="Polarization" value={Polarization} barColor="#999999" />
 
       <Box
         key={animationKey}

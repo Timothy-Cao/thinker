@@ -10,7 +10,7 @@ const Newspaper = ({ startX, startY, endX, endY, onEnd }) => {
 
       const endTimeout = setTimeout(() => {
         onEnd();
-      }, 300); // Duration of the animation
+      }, 300); 
 
       return () => clearTimeout(endTimeout);
     };

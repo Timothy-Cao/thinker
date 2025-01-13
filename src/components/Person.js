@@ -4,9 +4,9 @@ import Console from './Console';
 
 const Person = ({ onAlignmentChange, content, openMindedness, criticality, confirmationBias, swayability, onSwayabilityChange, onResetLogs, }) => {
   const [alignment, setAlignment] = useState({
-    red: 33.3,
-    blue: 33.3,
-    green: 33.3,
+    cyan: 33.3,
+    magenta: 33.3,
+    yellow: 33.3,
   });
 
   const [logs, setLogs] = useState([]);
@@ -26,32 +26,19 @@ const roundToOneDecimal = (value) => {
     }
   }, [onResetLogs]);
 
-  const getColorName = (hex) => {
-    switch (hex) {
-      case '#FF0000':
-        return 'Red';
-      case '#0000FF':
-        return 'Blue';
-      case '#008000':
-        return 'Green';
-      default:
-        return 'Unknown';
-    }
-  };
-
   const processContent = (content) => {
     if (!content) return;
 
     const logEntries = [...logs]; 
 
     // Step 1: Check if the content should be processed based on openMindedness
-    const preferentialAlignment = alignment.red > alignment.blue && alignment.red > alignment.green
-      ? '#FF0000'
-      : alignment.blue > alignment.green
-      ? '#0000FF'
-      : '#008000';
-
-    let statusMessage = `${getColorName(content.color)} - Persuasiveness: ${roundToOneDecimal(content.validity)}`;
+    const preferentialAlignment = alignment.cyan > alignment.magenta && alignment.cyan > alignment.yellow
+      ? 'cyan'
+      : alignment.magenta > alignment.yellow
+      ? 'magenta'
+      : 'yellow';
+      
+    let statusMessage = `${content.color} Persuasiveness: ${roundToOneDecimal(content.validity)}`;
 
     if (content.color !== preferentialAlignment) {
       const chance = Math.random() * 100;
@@ -84,22 +71,22 @@ const roundToOneDecimal = (value) => {
 
   // Step 4: Calculate alignment change based on content color and swayability
   const swayFactor = swayability / 100;
-  const aggressionInfluence = content.aggression / 100; 
-  const totalInfluence = swayFactor * aggressionInfluence;
+  const PolarizationInfluence = content.Polarization / 100; 
+  const totalInfluence = swayFactor * PolarizationInfluence;
 
   let newAlignment = { ...alignment }; 
-  if (content.color === '#FF0000') { 
-    newAlignment.red = roundToOneDecimal(totalInfluence * 100 + (1 - totalInfluence) * alignment.red);
-    newAlignment.blue = roundToOneDecimal(totalInfluence * 0 + (1 - totalInfluence) * alignment.blue);
-    newAlignment.green = roundToOneDecimal(totalInfluence * 0 + (1 - totalInfluence) * alignment.green);
-  } else if (content.color === '#0000FF') { 
-    newAlignment.red = roundToOneDecimal(totalInfluence * 0 + (1 - totalInfluence) * alignment.red);
-    newAlignment.blue = roundToOneDecimal(totalInfluence * 100 + (1 - totalInfluence) * alignment.blue);
-    newAlignment.green = roundToOneDecimal(totalInfluence * 0 + (1 - totalInfluence) * alignment.green);
-  } else if (content.color === '#008000') { 
-    newAlignment.red = roundToOneDecimal(totalInfluence * 0 + (1 - totalInfluence) * alignment.red);
-    newAlignment.blue = roundToOneDecimal(totalInfluence * 0 + (1 - totalInfluence) * alignment.blue);
-    newAlignment.green = roundToOneDecimal(totalInfluence * 100 + (1 - totalInfluence) * alignment.green);
+  if (content.color === 'cyan') { 
+    newAlignment.cyan = roundToOneDecimal(totalInfluence * 100 + (1 - totalInfluence) * alignment.cyan);
+    newAlignment.magenta = roundToOneDecimal(totalInfluence * 0 + (1 - totalInfluence) * alignment.magenta);
+    newAlignment.yellow = roundToOneDecimal(totalInfluence * 0 + (1 - totalInfluence) * alignment.yellow);
+  } else if (content.color === 'magenta') { 
+    newAlignment.cyan = roundToOneDecimal(totalInfluence * 0 + (1 - totalInfluence) * alignment.cyan);
+    newAlignment.magenta = roundToOneDecimal(totalInfluence * 100 + (1 - totalInfluence) * alignment.magenta);
+    newAlignment.yellow = roundToOneDecimal(totalInfluence * 0 + (1 - totalInfluence) * alignment.yellow);
+  } else if (content.color === 'yellow') { 
+    newAlignment.cyan = roundToOneDecimal(totalInfluence * 0 + (1 - totalInfluence) * alignment.cyan);
+    newAlignment.magenta = roundToOneDecimal(totalInfluence * 0 + (1 - totalInfluence) * alignment.magenta);
+    newAlignment.yellow = roundToOneDecimal(totalInfluence * 100 + (1 - totalInfluence) * alignment.yellow);
   }
 
   // Decaying swayability due to lost of plastic thinking

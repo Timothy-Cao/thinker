@@ -11,15 +11,15 @@ const Simulation = () => {
   const theme = useTheme();
 
   const tvAttributes = [
-    { color: '#FF0000', validity: 25, popularity: 75, aggression: 75 },
-    { color: '#0000FF', validity: 50, popularity: 33, aggression: 50 },
-    { color: '#008000', validity: 75, popularity: 33, aggression: 25 },
+    { color: 'cyan', validity: 25, popularity: 75, Polarization: 75 },
+    { color: 'magenta', validity: 50, popularity: 33, Polarization: 50 },
+    { color: 'yellow', validity: 75, popularity: 33, Polarization: 25 },
   ];
 
   const [alignment, setAlignment] = useState({
-    red: 33.3,
-    blue: 33.3,
-    green: 33.3,
+    cyan: 33.3,
+    magenta: 33.3,
+    yellow: 33.3,
   });
 
   const [content, setContent] = useState(null);
@@ -30,9 +30,9 @@ const Simulation = () => {
     swayability: 50,
   });
 
-  const resetLogsRef = useRef(null); // Ref to store the reset function
+  const resetLogsRef = useRef(null); 
   const handleReset = () => {
-    setAlignment({ red: 33.3, blue: 33.3, green: 33.3 });
+    setAlignment({ cyan: 33.3, magenta: 33.3, yellow: 33.3 });
     setControlValues({
       openMindedness: 70,
       criticality: 50,
@@ -41,7 +41,7 @@ const Simulation = () => {
     });
     
     if (resetLogsRef.current) {
-      resetLogsRef.current(); // Call the reset function
+      resetLogsRef.current(); 
     }
   };
 
@@ -98,7 +98,7 @@ const Simulation = () => {
           const selectedContent = {
             color: tvAttributes[selectedIndex].color,
             validity: normalRandom(tvAttributes[selectedIndex].validity, 35),
-            aggression: tvAttributes[selectedIndex].aggression,
+            Polarization: tvAttributes[selectedIndex].Polarization,
           };
 
           setContent(selectedContent);
@@ -143,7 +143,7 @@ const Simulation = () => {
                 color={tv.color}
                 validity={tv.validity}
                 popularity={tv.popularity}
-                aggression={tv.aggression}
+                Polarization={tv.Polarization}
                 isSelected={index === animatedTVIndex}
               />
             </div>

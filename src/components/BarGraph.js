@@ -6,9 +6,9 @@ const BarGraph = ({ alignment }) => {
   const data = [
     {
       name: 'Alignment',
-      red: alignment.red,
-      blue: alignment.blue,
-      green: alignment.green,
+      cyan: alignment.cyan,
+      magenta: alignment.magenta,
+      yellow: alignment.yellow,
     },
   ];
 
@@ -28,9 +28,9 @@ const BarGraph = ({ alignment }) => {
         <BarChart data={data} barCategoryGap="5px">
           <XAxis dataKey="name" />
           <YAxis domain={[0, 100]} />
-          <Bar dataKey="red" name="Red" fill="#FF0000" />
-          <Bar dataKey="blue" name="Blue" fill="#0000FF" />
-          <Bar dataKey="green" name="Green" fill="#008000" />
+          <Bar dataKey="cyan" name="cyan" fill="#00FFFF" />
+          <Bar dataKey="magenta" name="magenta" fill="#FF00FF" />
+          <Bar dataKey="yellow" name="yellow" fill="#FFFF00" />
         </BarChart>
       </ResponsiveContainer>
     </Box>
