@@ -36,19 +36,19 @@ const Page3 = () => {
         </Grid>
         <Grid item xs={8}>
           <Typography variant="body1">
-            Represents the hidden variable indicating the truthfulness of content. For a TV, it reflects the average truthfulness of its content.
+            A variable from 0 - 100 that is examined by the consumer to determine if the content will be digested.
           </Typography>
         </Grid>
 
         {/* Popularity */}
         <Grid item xs={4}>
           <Typography variant="body1" fontWeight="bold">
-            Popularity:
+            Frequency:
           </Typography>
         </Grid>
         <Grid item xs={8}>
           <Typography variant="body1">
-            Correlates with how often content is produced for consumers. TV channels are randomized in a selection bag based on their weights to determine which one produces content.
+            A variable from 1 - 100. When content is randomly generated, the TV's weight determines the likelihodd of that TV generating content. 
           </Typography>
         </Grid>
 
@@ -60,7 +60,7 @@ const Page3 = () => {
         </Grid>
         <Grid item xs={8}>
           <Typography variant="body1">
-            Both affect how much a person’s alignment changes after consuming content. Polarization applies to TVs, while swayability describes the user. Swayability decreases over time due to fatigue.
+            Both are variables from 0 - 100. They are multiplied together as a percentage to determine how much alignment changes when digesting content. Product of 0% implies an unchanging opinion. 
           </Typography>
         </Grid>
 
@@ -72,7 +72,7 @@ const Page3 = () => {
         </Grid>
         <Grid item xs={8}>
           <Typography variant="body1">
-            Represents the tendency to favor content that aligns with one's beliefs. It adds to the score of aligned content and reduces the score of misaligned content.
+            A variable from 0 - 100 that is added to a consumer percieved content validity. A 100 will cause the user to always pick their current alignment. 
           </Typography>
         </Grid>
 
@@ -84,7 +84,19 @@ const Page3 = () => {
         </Grid>
         <Grid item xs={8}>
           <Typography variant="body1">
-            The threshold above which information is impactful enough to change beliefs. Content validity must exceed this threshold to influence the individual.
+            A variable from 0 - 100 which is the minimum percieved validity for the user to digest content it recieves. 
+          </Typography>
+        </Grid>
+
+        {/* OpenMindedness */}
+        <Grid item xs={4}>
+          <Typography variant="body1" fontWeight="bold">
+          OpenMindedness:
+          </Typography>
+        </Grid>
+        <Grid item xs={8}>
+          <Typography variant="body1">
+            A variable from 0 - 100 which is the probability a non-top-alignment content is rejected without consideration. 
           </Typography>
         </Grid>
       </Grid>

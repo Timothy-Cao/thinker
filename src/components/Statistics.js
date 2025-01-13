@@ -15,9 +15,9 @@ const Statistics = () => {
   });
 
   const [tvAttributes, setTvAttributes] = useState([
-    { color: 'cyan', validity: 35, popularity: 100, polarization: 75 },
-    { color: 'magenta', validity: 50, popularity: 50, polarization: 50 },
-    { color: 'yellow', validity: 65, popularity: 1, polarization: 25 },
+    { color: 'cyan', validity: 25, popularity: 35, polarization: 35 },
+    { color: 'magenta', validity: 50, popularity: 15, polarization: 50 },
+    { color: 'yellow', validity: 75, popularity: 5, polarization: 75 },
   ]);
 
   const roundToOneDecimal = (value) => Math.max(0, Math.min(100, parseFloat(value.toFixed(1))));
