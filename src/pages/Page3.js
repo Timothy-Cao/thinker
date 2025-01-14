@@ -28,7 +28,6 @@ const Page3 = () => {
       <br />
 
       <Grid container spacing={2} sx={{ width: '100%' }}>
-        {/* Validity */}
         <Grid item xs={4}>
           <Typography variant="body1" fontWeight="bold">
             Validity:
@@ -40,7 +39,6 @@ const Page3 = () => {
           </Typography>
         </Grid>
 
-        {/* Popularity */}
         <Grid item xs={4}>
           <Typography variant="body1" fontWeight="bold">
             Frequency:
@@ -52,7 +50,6 @@ const Page3 = () => {
           </Typography>
         </Grid>
 
-        {/* Polarization & Swayability */}
         <Grid item xs={4}>
           <Typography variant="body1" fontWeight="bold">
             Polarization & Swayability:
@@ -64,7 +61,6 @@ const Page3 = () => {
           </Typography>
         </Grid>
 
-        {/* Confirmation Bias */}
         <Grid item xs={4}>
           <Typography variant="body1" fontWeight="bold">
             Confirmation Bias:
@@ -76,7 +72,6 @@ const Page3 = () => {
           </Typography>
         </Grid>
 
-        {/* Criticality */}
         <Grid item xs={4}>
           <Typography variant="body1" fontWeight="bold">
             Criticality:
@@ -88,7 +83,6 @@ const Page3 = () => {
           </Typography>
         </Grid>
 
-        {/* OpenMindedness */}
         <Grid item xs={4}>
           <Typography variant="body1" fontWeight="bold">
           OpenMindedness:

@@ -31,12 +31,11 @@ const Statistics = () => {
 
   const processLikelihood = (contentAlignment, currentAlignment) => {
     if (contentAlignment === currentAlignment) {
-      return 1; // Always process aligned content
+      return 1; 
     }
   
-    // Calculate likelihood of processing non-aligned content based on confirmation bias
     const biasFactor = controlValues.confirmationBias / 100;
-    return biasFactor; // Bias scales between 0 (no bias) to 1 (full bias)
+    return biasFactor; 
   };
   
 
@@ -57,11 +56,10 @@ const Statistics = () => {
           ? 'magenta'
           : 'yellow';
   
-      let adjustedValidity = normalRandom(validity, 35); // Randomized validity with variance
+      let adjustedValidity = normalRandom(validity, 35); 
   
       const processLikelihoodValue = processLikelihood(color, preferentialAlignment);
       if (Math.random() > processLikelihoodValue) {
-        // Skip processing this content if it's not within the likelihood
         continue;
       }
   
