@@ -66,7 +66,7 @@ const PageHandler = () => {
           justifyContent: 'center',
         }}
       >
-        {[...Array(4)].map((_, index) => {
+        {[...Array(5)].map((_, index) => {
           const page = index + 1;
           return (
             <Tooltip key={page} title={`Page ${page}`} placement="top">
