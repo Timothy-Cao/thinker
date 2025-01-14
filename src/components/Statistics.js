@@ -55,7 +55,14 @@ const Statistics = () => {
           : alignment.magenta > alignment.yellow
           ? 'magenta'
           : 'yellow';
-  
+
+      if (color !== preferentialAlignment) {
+        const chance = Math.random() * 100;
+        if (chance > controlValues.openMindedness) {
+          continue;
+        }
+      }
+      
       let adjustedValidity = normalRandom(validity, 35); 
   
       const processLikelihoodValue = processLikelihood(color, preferentialAlignment);
