@@ -12,10 +12,13 @@ const Home = () => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '80vh' }}>
       <Typography variant="h4" gutterBottom>
-        Hello, fellow thinker!
+        Hello, thinker!
       </Typography>
       <Typography variant="body1" paragraph>
         Simulate the act of thinking in the face of cognitive biases.
+      </Typography>
+      <Typography variant="body1" paragraph>
+        By Tim Cao
       </Typography>
       <Button variant="contained" color="primary" onClick={startTutorial}>
         Start simulation
